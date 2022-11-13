@@ -20,9 +20,23 @@ app.get('/', function (req, res) {
 });
 
 // your first API endpoint...
+//let's use it to test the request parameters
 app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+  res.json({ greeting: 'hello API'});
 });
+
+//the only function we have to write to pass the tests:
+app.get("/api/whoami", (req, res) => {
+  //the ip is in req.ip methods while the rest of the info we need is in the headers
+  let ipRequest = req.ip;
+  let browserUsed = req.headers["user-agent"];
+  let languageUsed = req.headers["accept-language"];
+  res.json({
+    ipaddress: ipRequest,
+    software: browserUsed,
+    language: languageUsed
+  })
+})
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
